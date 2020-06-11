@@ -43,7 +43,7 @@ type Video =
       [<JsonProperty("length")>]
       Duration: Duration }
 
-type FullChat = VideoId -> Credentials -> Duration -> OffsetSeconds -> OffsetSeconds -> Comment list
+type DownloadChat = VideoId -> Credentials -> Duration -> OffsetSeconds -> OffsetSeconds -> Comment list -> Comment list
 
 let setHeaders: SetHeaders =
     fun client credentials ->
@@ -94,7 +94,7 @@ let getVideoAsync: MakeRequest<Async<Video>> =
 
         video
 
-let rec downloadChat =
+let rec downloadChat: DownloadChat =
     fun videoId credentials duration offset interval conversation ->
         let url = buildUrl videoId offset
 
