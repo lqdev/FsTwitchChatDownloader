@@ -16,11 +16,10 @@ type Url = string
 type BuildUrl = VideoId -> OffsetSeconds -> Url
 type MakeRequest<'a> = Url -> Credentials -> 'a
 type Unwrap<'a, 'b> = 'a -> 'b
+type SetHeaders = HttpClient -> Credentials -> unit
 
 type Commenter =
     { [<JsonProperty("display_name")>]
-
-
 
       DisplayName: string }
 
@@ -46,6 +45,16 @@ type Video =
 
 type FullChat = VideoId -> Credentials -> Duration -> OffsetSeconds -> OffsetSeconds -> Comment list
 
+let setHeaders: SetHeaders =
+    fun client credentials ->
+        match credentials with
+        | ClientId id -> client.DefaultRequestHeaders.Add("client-id", id)
+        | Token (scheme, token) ->
+            client.DefaultRequestHeaders.Authorization <- Headers.AuthenticationHeaderValue(scheme, token)
+        | Both (id, (scheme, token)) ->
+            client.DefaultRequestHeaders.Add("client-id", id)
+            client.DefaultRequestHeaders.Authorization <- Headers.AuthenticationHeaderValue(scheme, token)
+
 let (buildUrl: BuildUrl) =
     fun videoId offsetSeconds ->
         sprintf "https://api.twitch.tv/v5/videos/%s/comments?content_offset_seconds=%i" videoId offsetSeconds
@@ -57,13 +66,7 @@ let getChatAsync: MakeRequest<Async<Chat>> =
             async {
                 use client = new HttpClient()
 
-                match credentials with
-                | ClientId id -> client.DefaultRequestHeaders.Add("client-id", id)
-                | Token (scheme, token) ->
-                    client.DefaultRequestHeaders.Authorization <- Headers.AuthenticationHeaderValue(scheme, token)
-                | Both (id, (scheme, token)) ->
-                    client.DefaultRequestHeaders.Add("client-id", id)
-                    client.DefaultRequestHeaders.Authorization <- Headers.AuthenticationHeaderValue(scheme, token)
+                setHeaders client credentials
 
                 let! req = client.GetStringAsync(url) |> Async.AwaitTask
                 let body = JsonConvert.DeserializeObject<Chat>(req)
@@ -79,13 +82,7 @@ let getVideoAsync: MakeRequest<Async<Video>> =
             async {
                 use client = new HttpClient()
 
-                match credentials with
-                | ClientId id -> client.DefaultRequestHeaders.Add("client-id", id)
-                | Token (scheme, token) ->
-                    client.DefaultRequestHeaders.Authorization <- Headers.AuthenticationHeaderValue(scheme, token)
-                | Both (id, (scheme, token)) ->
-                    client.DefaultRequestHeaders.Add("client-id", id)
-                    client.DefaultRequestHeaders.Authorization <- Headers.AuthenticationHeaderValue(scheme, token)
+                setHeaders client credentials
 
                 let! req = client.GetStringAsync(url) |> Async.AwaitTask
 
