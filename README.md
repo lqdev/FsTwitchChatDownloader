@@ -18,10 +18,11 @@ Add path to your NuGet packages at the top of the file. See [default locations f
 The sample below downloads the full chat for a specified video. The chat is downloaded at 60 second intervals. 
 
 ```fsharp
-let videoId = "YOUR-VIDEO-ID"
+let videoId:VideoId = "YOUR-VIDEO-ID"
 let credentials = Both ("YOUR-CLIENT-ID",("Oauth","YOUR-TOKEN"))
-let videoUrl = 
-    sprintf "https://api.twitch.tv/v5/videos/%s" videoId |> Url
+
+let videoUrl:Url =
+    sprintf "https://api.twitch.tv/v5/videos/%s" videoId
 
 let videoDetails = getVideoAsync videoUrl credentials |> Async.RunSynchronously
 

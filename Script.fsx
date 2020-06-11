@@ -19,6 +19,9 @@ type Unwrap<'a, 'b> = 'a -> 'b
 
 type Commenter =
     { [<JsonProperty("display_name")>]
+
+
+
       DisplayName: string }
 
 type Message =
@@ -94,8 +97,8 @@ let getVideoAsync: MakeRequest<Async<Video>> =
 
         video
 
-let rec (downloadChat:FullChat) = 
-    fun videoId credentials duration offset interval conversation =
+let rec downloadChat =
+    fun videoId credentials duration offset interval conversation ->
         let url = buildUrl videoId offset
 
         let increase = min (duration - offset) interval
