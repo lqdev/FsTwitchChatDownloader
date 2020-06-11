@@ -15,7 +15,7 @@ Add path to your NuGet packages at the top of the file. See [default locations f
 #I "/Users/<YOUR-USER-NAME>/.nuget/packages"
 ```
 
-The sample below downloads the full chat for a specified video. The chat is downloaded at 60 second intervals. 
+At the end of `Script.fsx`, add the following code. The sample below downloads the full chat for a specified video. Downloading starts at second 0. The chat is downloaded at 60 second intervals and keeps appending the results to the list of comments, which initially is empty.
 
 ```fsharp
 let videoId:VideoId = "YOUR-VIDEO-ID"
