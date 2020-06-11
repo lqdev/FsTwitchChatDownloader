@@ -19,7 +19,7 @@ The sample below downloads the full chat for a specified video. The chat is down
 
 ```fsharp
 let videoId:VideoId = "YOUR-VIDEO-ID"
-let credentials = Both ("YOUR-CLIENT-ID",("Oauth","YOUR-TOKEN"))
+let credentials = Both ("YOUR-CLIENT-ID",("OAuth","YOUR-TOKEN"))
 
 let videoUrl:Url =
     sprintf "https://api.twitch.tv/v5/videos/%s" videoId
