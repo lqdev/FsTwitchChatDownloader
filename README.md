@@ -1,6 +1,6 @@
 # FsTwitchChatDownloader
 
-F# utility for downloading chats from Twitch
+F# utility for downloading chats from Twitch. This solution uses v5 of the Twitch API.
 
 ## Prerequisites
 
