@@ -15,9 +15,11 @@ Add path to your NuGet packages at the top of the `Script.fsx` file. See [defaul
 #I "/Users/<YOUR-USER-NAME>/.nuget/packages"
 ```
 
-At the end of `Script.fsx`, add the following code. The sample below downloads the full chat for a specified video. Downloading starts at second 0. The chat is downloaded at 60 second intervals and keeps appending the results to the list of comments, which initially is empty.
+At the end of `Script.fsx`, add the following code. The sample below downloads the full chat for a specified video. Downloading starts at second 0. The chat is downloaded at 60 second intervals and keeps appending the results to the list of comments, which initially is empty. Then, a `Chat` object is created and stored in a file called `chat.json`.
 
 ```fsharp
+open System.IO
+
 let videoId:VideoId = "YOUR-VIDEO-ID"
 let credentials = Both ("YOUR-CLIENT-ID",("OAuth","YOUR-TOKEN"))
 
@@ -26,6 +28,10 @@ let videoUrl:Url =
 
 let videoDetails = getVideoAsync videoUrl credentials |> Async.RunSynchronously
 
-let fullChat = 
+let comments =
     downloadChat videoId credentials videoDetails.Duration 0 60 []
+
+let fullChat = { Comments = comments }
+
+File.WriteAllText("chat.json", (fullChat |> JsonConvert.SerializeObject))
 ```
