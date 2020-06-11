@@ -16,7 +16,6 @@ type Url = string
 type BuildUrl = VideoId -> OffsetSeconds -> Url
 type MakeRequest<'a> = Url -> Credentials -> 'a
 type Unwrap<'a, 'b> = 'a -> 'b
-type FullChat = VideoId -> Credentials -> Duration -> OffsetSeconds -> OffsetSeconds -> Comment list
 
 type Commenter =
     { [<JsonProperty("display_name")>]
@@ -42,6 +41,7 @@ type Video =
       [<JsonProperty("length")>]
       Duration: Duration }
 
+type FullChat = VideoId -> Credentials -> Duration -> OffsetSeconds -> OffsetSeconds -> Comment list
 
 let (buildUrl: BuildUrl) =
     fun videoId offsetSeconds ->
