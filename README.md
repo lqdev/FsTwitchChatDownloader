@@ -9,7 +9,7 @@ F# utility for downloading chats from Twitch. This solution uses v5 of the Twitc
 
 ## Use
 
-Add path to your NuGet packages at the top of the file. See [default locations for global packages](https://docs.microsoft.com/nuget/Consume-Packages/managing-the-global-packages-and-cache-folders)
+Add path to your NuGet packages at the top of the `Script.fsx` file. See [default locations for global packages](https://docs.microsoft.com/nuget/Consume-Packages/managing-the-global-packages-and-cache-folders)
 
 ```fsharp
 #I "/Users/<YOUR-USER-NAME>/.nuget/packages"
