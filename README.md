@@ -35,3 +35,9 @@ let fullChat = { Comments = comments }
 
 File.WriteAllText("chat.json", (fullChat |> JsonConvert.SerializeObject))
 ```
+
+Then, in the command line, run
+
+```dotnetcli
+dotnet fsi exec Script.fsx
+```
